@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+ <head><script src="/j/out"></script>
+  <title>FUNC-007 Рекурсивные функции</title><meta charset="utf-8"><meta name="author" content="Ilya Gosudarev">
+ </head>
+ <body>
+  <script src="/j/dblttl"></script>
+  <script>{
+  var counters = [].fill.call({ length: 4 }, 0);
+	var stringArray = ["sec", "add", "mpy","pow"];
+
+                  const sec = a =>{
+                
+                    counters[0]=counters[0]+1;
+                      return     1 + a;}
+    const add = (a, b) => {  counters[1]=counters[1]+1;
+                       return     (b === 0) ?a: sec(add(a, b - 1));}
+    const mpy = (a, b) => {counters[2]=counters[2]+1;
+                           return    (b === 1) ? a : add(a, mpy(a, b - 1));}
+    const pow=(a,b)=>{
+      counters[3]=counters[3]+1;
+      return(b===0)?1:mpy(a,pow(a,b-1));}
+    // mpy(11,3) = 11 + mpy(11,2) = 11 + 11 + mpy(11,1) = 11 + 11 + 11 = 33
+
+    Out.log(   "pow(11, 3)=",pow(11,3)); // 33
+  for (let i=0;i<4;i++){
+     Out.log(  stringArray[i],"  =  ",counters[i]); // 33
+    
+  }
+   /*pow(11, 3)=1331
+sec  =  80465
+add  =  80595
+mpy  =  133
+pow  =  4*/ 
+    
+/*
+   Допишите определение функции pwr от a и b, которая определяется через себя и mpy и выдаёт a ** b для положительных целых чисел.
+   Выясните, при каких значениях аргументов наступает переполнение стека. Проиллюстрируйте это деревом вызовов, т.е. постройте дерево для последней комбинации значений аргументов pwr, при которой не происходит переполнения.
+   Нам нужно выяснить, сколько раз вызывается при этом каждая из базовых функций (sec, add, mpy).
+   
+   Ранее: recur_task
+
+*/
+  
+  
+}</script>
+ </body>
+</html>
