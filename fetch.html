@@ -1,23 +1,58 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title> fetch task</title>
+  </head>
 
-<head>
-  <title>Promises</title>
+  <body>
+   
+
+    <button>GET IT </button>
+        <ol id="values">
+        <li>10</li>
+        <li>20</li>
+        <li>30</li>
+    </ol>
+    <ol id="urls">
+        <li>https://kodaktor.ru/api/m/</li>
+        <li>https://kodaktor.ru/api/MS2/</li>
+        <li>https://kodaktor.ru/api/MS3/</li>
+    </ol>
+<p id="res"></p>
+    <script>
+        var valuesObject=document.getElementById("values").getElementsByTagName("*");
+      var urlsObject=document.getElementById("urls").getElementsByTagName("*");
+
+      let values=[];
+      let URLs=[];
+      let URLofAPI=[];
   
-</head>
+      for(let  i=0;i<valuesObject.length;i++)
+      {
+          values[i]=parseInt (valuesObject[i].textContent);
+      
+           URLs[i]=urlsObject[i].textContent;
+      }
 
-<body>
-  <h1>Fetch exercise</h1>
-  <button>Поехали</button>
-  <ol id="values">
-    <li>10</li>
-    <li>20</li>
-    <li>30</li>
-  </ol>
-  <ol id="urls">
-    <li>https://kodaktor.ru/api/m/</li>
-    <li>https://kodaktor.ru/api/MS2/</li>
-    <li>https://kodaktor.ru/api/MS3/</li>
-  </ol>
+        document
+            .querySelector('button')
+            .addEventListener('click',
+            async ({ target: t }) => {
+                t.textContent = 'Handling..';
+                let result = [];
+               
+                for(let  i=0 ;i<3;i++) {
+                   URLofAPI[i]= (i==0)?URLs[i]+values[i]:URLs[i]+values[i] + '/' + result[i-1];
+                   console.log(URLofAPI[i],i);
+                   let r =  await fetch(URLofAPI[i],{headers:{'Content-Type': 'application/json'}}).then(response=>response.json());
+                    result[i]=r.result;
+                }                  
+                t.textContent = "Done !";
+               document.getElementById("res").textContent=result;
+            }
+        ); 
+    
+    </script>
   </body>
 </html>
+
